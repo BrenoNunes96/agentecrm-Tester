@@ -4,14 +4,14 @@ import { usuarioEntity } from './entities/usuario.entity';
 import { usuarioService } from './services/usuario.service';
 import { usuarioController } from './controllers/usuario.controller';
 
-import { Bcrypts } from '../Agente/Bcrypt/bcrypt';
 import { authModule } from '../auth/authModule.module';
+import { Bcrypt } from '../auth/bcrypt/bcrypt';
 
 
 
 @Module({
   imports: [TypeOrmModule.forFeature([usuarioEntity]),forwardRef(()=>authModule)], 
-  providers: [usuarioService,Bcrypts],
+  providers: [usuarioService,Bcrypt],
   controllers: [usuarioController],
   exports: [usuarioService],
 })

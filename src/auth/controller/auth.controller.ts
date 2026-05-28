@@ -1,8 +1,8 @@
 import { Controller, HttpCode, HttpStatus, Injectable, Post, UseGuards } from "@nestjs/common";
-import { postMessageToThread } from "worker_threads";
+
 import { UsuarioLogin } from "../Entities/authEntity.entityt";
-import { AuthService } from "../service/AuthService.service";
-import { localStrategy } from "../strategy/localstrategy.strategy";
+import { AuthService } from "../service/temp";
+
 import { localGuard } from "../guard/localGuard.guard";
 @Injectable()
 @Controller("/usuario")

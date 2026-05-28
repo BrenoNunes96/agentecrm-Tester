@@ -4,14 +4,15 @@ import { Repository } from "typeorm";
 
 import { HttpCode, HttpException, HttpStatus } from "@nestjs/common";
 
-import { Bcrypts } from "../../Agente/Bcrypt/bcrypt";
+
 import { DeleteResult } from "typeorm/browser";
+import { Bcrypt } from "../../auth/bcrypt/bcrypt";
 
 
 export class usuarioService {
 
 constructor(  
-    private bcrypt: Bcrypts,
+    private bcrypt: Bcrypt,
     @InjectRepository(usuarioEntity) 
 private readonly usuario:Repository<usuarioEntity> ){}
 
@@ -50,7 +51,7 @@ throw new HttpException("mesmo usuario escolha outro",HttpStatus.BAD_REQUEST  )
 }
 
 
-        x.senha = await this.bcrypt.cryptografarSenha(x.senha)
+        x.senha = await this.bcrypt.CryptgrafarSenha(x.senha)
     return await this.usuario.save(x)
 
 }
