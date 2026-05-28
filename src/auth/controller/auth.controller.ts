@@ -3,7 +3,10 @@ import { Controller, HttpCode, HttpStatus, Injectable, Post, UseGuards } from "@
 import { UsuarioLogin } from "../Entities/authEntity.entityt";
 import { AuthService } from "../service/AuthService.service";
 
+
 import { localGuard } from "../guard/localGuard.guard";
+import { ApiTags } from "@nestjs/swagger";
+@ApiTags()
 @Injectable()
 @Controller("/usuario")
 
