@@ -9,7 +9,7 @@ import { secretkey } from "./constans/secretkey";
 import { UsuarioModule } from "../usuario/usuario.module";
 import { AuthController } from "./controller/auth.controller";
 import { Bcrypt } from "./bcrypt/bcrypt";
-import { AuthService } from "./service/temp";
+import { AuthService } from "./service/AuthService.service";
 import { jwtStrategy } from "./strategy/jwtStrategy.strategy";
 import { jwtGuard } from "./guard/jwtLocal.Guard";
 import { localGuard } from "./guard/localGuard.guard";
