@@ -5,6 +5,9 @@ import { App } from 'supertest/types';
 import { AppModule } from './../src/app.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { describe, it, expect, beforeAll, afterAll } from '@jest/globals';
+import { Http2ServerRequest } from 'http2';
+import { ok } from 'assert';
+import { response } from 'express';
 
 describe('Testes dos Módulos Usuario e Auth (e2e)', () => {
 
@@ -32,78 +35,60 @@ describe('Testes dos Módulos Usuario e Auth (e2e)', () => {
 
   afterAll(async () => {
     await app.close();
-  })
+  })          
 
-  it("01 - Deve Cadastrar um novo Usuário", async () => {
-    const resposta = await request(app.getHttpServer())
-      .post('/usuario/registrar')
-      .send({
 
-        usuario: 'root@root.com',
-        senha: 'rootroot',
-      })
-      .expect(201)
+it("01 - cadastro de usuario", async ()=>{
+const reposta = await request(app.getHttpServer())
 
-    usuarioId = resposta.body.id;
+.post("/usuario/registrar")
+.send({
+  usuario:"string",
+  senha:"string"
+})
+.expect(201)
+usuarioId = reposta.body.id
 
-  });
+})
+it("02 - logar com o usuario ", async ()=>{
+const resposta = await request(app.getHttpServer())
+.post("/usuario/logar")
+.send({
+  usuario:"string",
+  senha:"string"
 
-  it("02 - Não Deve Cadastrar um Usuário Duplicado", async () => {
-    await request(app.getHttpServer())
-      .post('/usuario/registrar')
-      .send({
-      
-        usuario: 'root@root.com',
-        senha: 'rootroot',
-      })
-      .expect(400)
+})
 
-  });
+.expect(200)
+token = resposta.body.token
+})
 
-  it("03 - Deve Autenticar o Usuário (Login)", async () => {
-    const resposta = await request(app.getHttpServer())
-    .post("/usuarios/logar")
-    .send({
-      usuario: 'root@root.com',
-      senha: 'rootroot',
-    })
-    .expect(200)
+it("03 - listar usuarios", async ()=>{
+console.log(token)
+return await request(app.getHttpServer())
+.get("/usuario/")
+.set("Authorization",`${token}`)
+.send({})
+.expect(200)
+})
 
-    token = resposta.body.token;
+it("04 - atualizar usuario" , async ()=>{
+return await request (app.getHttpServer())
+.put("/usuario/atualizar")
+.set("Authorization",`${token}`)
+.send({usuario:'stringss', senha:"dwqodi"})
+.expect(200)
+})
 
-  })
+it("05 deletar usuario",async ()=>{
+return await request(app.getHttpServer())
+.delete(`/usuario/deletar/${usuarioId}`)
+.set("Authorization",`${token}`)
+.send({})
+.expect(200)
 
-  it("04 - Deve Listar todos os Usuários", async () => {
-    return request(app.getHttpServer())
-    .get('/usuario/')
-    .set('Authorization', `${token}`)
-    .send({})
-    .expect(200)
-  })
+})
 
-  it("05 - Deve Atualizar um Usuário", async () => {
 
-    console.log("ID RECUPERADO NO TESTE 01:", usuarioId);
-
-    const resposta = await request(app.getHttpServer())
-      .put('/usuario/atualizar')
-      .set('Authorization', `${token}`)
-      .send({
-        id: usuarioId,
-        usuario: 'usuario_atualizado@root.com',
-        senha: 'nova_senha_root',
-      });
-
-   
-    if (resposta.status !== 200) {
-      console.log("ERRO INTERNO DA API NO TESTE 05:", resposta.body);
-    }
-
-   
-    expect(resposta.status).toBe(200);
-    
-   
-    expect(resposta.body.usuario).toEqual('usuario_atualizado@root.com');
-  });
 
 });

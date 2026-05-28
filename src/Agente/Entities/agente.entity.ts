@@ -38,6 +38,7 @@ export class AgenteEntity {
      @ApiProperty()
     Status!: string;
 
+    @ApiProperty({ type: () => usuarioEntity})  
 
     @OneToMany(() => registroEntity, (registroEntity) => registroEntity.agente)
     registroExecucao!: registroEntity[];

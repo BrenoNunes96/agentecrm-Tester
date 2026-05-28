@@ -5,6 +5,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { DeleteResult } from "typeorm/browser";
 import { registroEntity } from "../../registroExecucoes/entities/RE.entity";
 import { totalmem } from "os";
+import { isAwaitKeyword } from "typescript";
 
 @Injectable()
 export class AgenteService{
@@ -44,6 +45,7 @@ return await this.agente.findOne({where:{id},relations:{registroExecucao:true}})
 
 
 async Updated(x:AgenteEntity):Promise<AgenteEntity>{
+
     await this.findById(x.id) // verifica se existe o agente pelo id
 
   let nomeAgente = await this.findByName(x['NomeAgente']) // verifica agente por nome 
@@ -71,94 +73,54 @@ let accAcum :Array<any>= []
 for(let x of agente){  // procura agente
  
 
-registroExecucao.push([{[x.id]:x.registroExecucao}])  // coloca o registroExecucao do agente + mais o id dele
+registroExecucao.push({[x.id]:x.registroExecucao})  // coloca o registroExecucao do agente + mais o id dele
 
 
 }
-
+let i :Array<any>= []
+console.log(registroExecucao)
 for(let x of registroExecucao){    // entra no array registroexecucao
-for(let y of x){                   // entra no inidice
 
-  let indice =Number(Object.keys(y)[0]) // 5 ou 1  indice entrado com sucesso 
+let indice = Object.keys(x)[0]
+for (let y of x[indice]){
 
-
-for(let i of y[indice]){          // entrei no objeto registroexecucao de cada agente
-
- accAcum.push({[Object.keys(y)[0]] : i["totaldeTokens"]}) // [ {"1":45} {"5":54}]
-
-
-}
-
+i.push({[indice]: y['totaldeTokens']  })
 
 }
 
 }
+console.log(i)
 
+let MediaTokenReduce = i.reduce((acc,item)=>{ // reduce faz laço entra em cada um por vez
+  if(!acc[Object.keys(item)[0]]){
+    acc[Object.keys(item)[0]]= {somando:0,contando:0,media:0} // cada indice do objetos declarados dessa forma
 
+  }
+  let indice = Object.keys(item)[0] 
+  console.log(indice)
 
-let mediaTokensAgente = accAcum.reduce((acc,item)=>{  // cada looping  um agente diferente     ** Object.keys(item)[0] é o indice q ta em accAccum
-   
-if(!acc[Object.keys(item)[0]]){ 
-acc[Object.keys(item)[0]] = {media:0,somando:0, contador : 0}    // se nao tiver o primeiro indice ,sera igual a media somando e contando zero
-
-
-}
-
-
-acc[Object.keys(item)[0]].somando +=item[Object.keys(item)[0]]     // {"1":somando:99}
-acc[Object.keys(item)[0]].contador  += 1           // {"1":contador:1}
-acc[Object.keys(item)[0]].media = acc[Object.keys(item)[0]].somando / acc[Object.keys(item)[0]].contador // {"1":{media:79.9}}
-
-
-
+  acc[indice].somando += item[indice] //entra no value do indice
+  acc[indice].contando += 1
+  acc[indice].media = acc[indice].somando / acc[indice].contando
 return acc
-
-
 },{})
-let pushmediaOrdenado: Array<any> = [];
-pushmediaOrdenado.push(mediaTokensAgente); // coloca em array cada indice com media etc
+let arrayMediRe :Array<any>= [MediaTokenReduce]
+console.log(arrayMediRe)
+let arrayMediR2e :Array<any>= []
 
-console.log(pushmediaOrdenado)
+for(let x of agente){
+for(let y of arrayMediRe){
 
-let agenteOrdem: Array<any> = [];
+  for(let i in y ){
+    if(Number(i)=== x.id){    
+arrayMediR2e.push({nome:x.NomeAgente,media:y[i].media})   // Entra no valor de cada indice y[i] e a chave fica o nome do agente
 
-for (let x of pushmediaOrdenado) {     
-
-  for (let chave in x) {      // entra no indice
-     
-    agenteOrdem.push({
-      agente: chave,           // pega o nome da chave ('1' ou '5')
-      media: x[chave].media,   // Object.keys(x)[0] **indice
-    
-    })   // acessa o valor da média daquela chave ;
+    }}
   }
 }
-agenteOrdem.sort((a, b) => a.media - b.media); // colocando em ordem de media os agente com agente :id e media :x[chave].media
 
-console.log(agenteOrdem)
-for(let x of agenteOrdem){     // entra em agente ex : agente : "1", media:"49.9"
-  agenteFinal = agenteOrdem.map((x) =>  {
+let x = arrayMediR2e.sort((a,b)=>a.media - b.media )
+console.log(x)
 
-let agenteNome=agente.find((a)=> a.id == Number(x.agente))   // achando id dentro de agentes todos com id de agenteOrdem
- 
-if(agenteNome){  // caso tenha um agente em comum retorna um novo objeto 
-  return {
-    agente: agenteNome?.NomeAgente,
-    media:x.media
-
-  }
-}else{
-    console.log('nenhum agente achado')
-  }
-
-}
-
-)
-console.log(agenteFinal)
-
-
-}
-return agenteFinal
-}
-
-}
+return x
+}}

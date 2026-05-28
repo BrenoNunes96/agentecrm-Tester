@@ -1,20 +1,34 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { usuarioEntity } from "../entities/usuario.entity";
 import { Repository } from "typeorm";
-import { Bcrypt } from "../../auth/bcrypt/bcrypt";
-import { HttpException, HttpStatus } from "@nestjs/common";
+
+import { HttpCode, HttpException, HttpStatus } from "@nestjs/common";
+
+import { Bcrypts } from "../../Agente/Bcrypt/bcrypt";
+import { DeleteResult } from "typeorm/browser";
+
 
 export class usuarioService {
 
 constructor(  
-    private bcrypt: Bcrypt,
+    private bcrypt: Bcrypts,
     @InjectRepository(usuarioEntity) 
 private readonly usuario:Repository<usuarioEntity> ){}
 
 
-async findbyname(usuario:string):Promise<usuarioEntity |null>{
 
-return this.usuario.findOne({where:{usuario}})
+async deletar(x:number):Promise<DeleteResult>{
+return this.usuario.delete(x)
+
+
+}
+
+
+
+
+async findbyname(usuario:string):Promise<usuarioEntity | null >{
+
+return await this.usuario.findOne({where:{usuario}})
 
 }
 
@@ -36,7 +50,7 @@ throw new HttpException("mesmo usuario escolha outro",HttpStatus.BAD_REQUEST  )
 }
 
 
-        x.senha = await this.bcrypt.criptografarSenha(x.senha)
+        x.senha = await this.bcrypt.cryptografarSenha(x.senha)
     return await this.usuario.save(x)
 
 }

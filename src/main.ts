@@ -10,16 +10,17 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
 
-  const config = new DocumentBuilder()
-    .setTitle('Blog Pessoal')
-    .setDescription('Projeto Blog Pessoal')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
+const config = new DocumentBuilder ()
+.setTitle("Agente de CRM")
+.addBearerAuth()
+.setVersion("1.0")
+.setDescription("descrição de agentes de crm")
+.setContact("breno nunes","www.agente.com.br","brenocp3@live.com")
+.build()
 
-  const document = SwaggerModule.createDocument(app, config);
+const document = SwaggerModule.createDocument(app,config)
+SwaggerModule.setup("swagger",app,document)
 
-  SwaggerModule.setup('swagger', app, document);
 
   await app.listen(process.env.PORT ?? 4000);
 }

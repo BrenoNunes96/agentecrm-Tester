@@ -1,13 +1,17 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { usuarioEntity } from './entities/usuario.entity';
 import { usuarioService } from './services/usuario.service';
 import { usuarioController } from './controllers/usuario.controller';
-import { Bcrypt } from '../auth/bcrypt/bcrypt';
+
+import { Bcrypts } from '../Agente/Bcrypt/bcrypt';
+import { authModule } from '../auth/authModule.module';
+
+
 
 @Module({
-  imports: [TypeOrmModule.forFeature([usuarioEntity])], 
-  providers: [usuarioService,Bcrypt],
+  imports: [TypeOrmModule.forFeature([usuarioEntity]),forwardRef(()=>authModule)], 
+  providers: [usuarioService,Bcrypts],
   controllers: [usuarioController],
   exports: [usuarioService],
 })

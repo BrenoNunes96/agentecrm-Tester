@@ -2,9 +2,11 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Injectable, Param,
 import { AgenteService } from "../Service/agente.service";
 import { AgenteEntity } from "../Entities/agente.entity";
 import { DeleteResult } from "typeorm";
-import { LocalAuthGuard } from "../../auth/guard/local-auth.guard";
-import { JwtAuthGuard } from "../../auth/guard/jwt-auth.guard";
+
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { jwtGuard } from "../../auth/guard/jwtLocal.Guard";
+
+
 
 @ApiTags("agente")
 @ApiBearerAuth() 
@@ -13,17 +15,34 @@ export class AgenteController{
 
   constructor(private agenteService: AgenteService){}
 
-  @UseGuards(JwtAuthGuard)
+
+@Post("/registrar")
+@UseGuards(jwtGuard)
+@HttpCode(HttpStatus.OK)
+async created(@Body() x:AgenteEntity):Promise<AgenteEntity>{
+console.log(x)
+  return await this.agenteService.Create(x)
+}
+
+
   @Get("/media")
+  @UseGuards(jwtGuard)
   @HttpCode(HttpStatus.OK)
   async media(): Promise<AgenteEntity>{
     return await this.agenteService.mediaTokens()
   }
 
-  @UseGuards(JwtAuthGuard)
+@UseGuards(jwtGuard)
+@Put("/atualizar")
+@HttpCode(HttpStatus.OK)
+async atualizar(@Body()x:AgenteEntity):Promise<AgenteEntity>{
+return await this.agenteService.Updated(x)
+
+}
+
+  @UseGuards(jwtGuard)
   @Get()
   @HttpCode(HttpStatus.OK)
   async findAll(): Promise<AgenteEntity[]>{
     return await this.agenteService.Findall() 
   }}
-

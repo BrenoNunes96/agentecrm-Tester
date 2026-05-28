@@ -20,7 +20,7 @@ console.log(x)
 x.totaldeTokens = x.quantidadeDeTokensDeSaida +x.quantidadeDeTokensDeEntrada // soma total de tokens
       
        agenteBanco['LimiteMaxMensal'] -= x.quantidadeDeTokensDeSaida +x.quantidadeDeTokensDeEntrada   // att limite deste agente
-
+    
      if(agenteBanco.LimiteMaxMensal < 0 ){         // caso o limite do agente requisitado no registroexecucao esteja com limitemnesal menor que zero entao da BAD_REQUEST
         throw new HttpException("Limite excedido do ",HttpStatus.BAD_REQUEST)
       }   

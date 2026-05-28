@@ -1,6 +1,7 @@
     import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
     import { AgenteEntity } from "../../Agente/Entities/agente.entity";
 import { ApiProperty } from "@nestjs/swagger";
+
         @Entity({name:"tb_usuarios"})
     export class usuarioEntity{
         
@@ -15,7 +16,10 @@ import { ApiProperty } from "@nestjs/swagger";
         @Column({length:255,nullable:false})
            @ApiProperty() 
     senha!: string
-   @ApiProperty() 
+    @ApiProperty({ type: () => AgenteEntity})  
+
+
+
     @OneToMany(()=>AgenteEntity , (x)=>x.usuario)
     
 
