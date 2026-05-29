@@ -6,7 +6,7 @@ import { ApiProperty } from "@nestjs/swagger";
     export class usuarioEntity{
         
     @PrimaryGeneratedColumn()
-       @ApiProperty() 
+@ApiProperty()
         id!:number
   
         @Column({length:255,nullable:false})

@@ -6,10 +6,12 @@ import { blob } from 'stream/consumers';
 @Controller()
 export class AppController {
   constructor() {}
-@ApiExcludeEndpoint()
-@Get()
+
+  @ApiExcludeEndpoint()
+  @Get()
 async redirect(@Res() resposta:any){
+  return resposta.redirect("/swagger")
+}
 
-return resposta.redirect("/swagger")
 
-}}
+}

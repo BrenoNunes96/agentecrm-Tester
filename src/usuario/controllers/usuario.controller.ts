@@ -7,7 +7,7 @@ import { DeleteResult } from "typeorm";
 import { jwtGuard } from "../../auth/guard/jwtLocal.Guard";
 
 @ApiBearerAuth()
-@ApiTags("Usuario")
+@ApiTags("usuarios")
 @Controller("/usuario")
 
 export class usuarioController{

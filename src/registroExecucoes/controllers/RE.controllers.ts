@@ -12,7 +12,7 @@ export class registroController{
 constructor (private readonly registroService:registroService){}
 
 @ApiBearerAuth()
-@ApiTags("Usuario")
+
 @UseGuards(jwtGuard)
 @Post("/registrar")
 async create (@Body() x:registroEntity):Promise<registroEntity | undefined>{
