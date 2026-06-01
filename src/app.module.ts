@@ -12,16 +12,17 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { authModule } from './auth/authModule.module';
 import { config } from 'process';
 import { ConfigModule } from '@nestjs/config';
-import { ProdService } from './data/prod.service';
+
 import { devServices } from './data/services/dev.service';
+import { prodService } from './data/services/prod.service';
 
 @Module({
-  imports: [
-      ConfigModule.forRoot(),
-  TypeOrmModule.forRootAsync({
-    useClass:ProdService,
-    imports:[ConfigModule]
-  }) ,AgenteModule,reModule,authModule,UsuarioModule],
+  imports:[
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+  useClass:prodService,
+  imports:[prodService]
+  }),AgenteModule,UsuarioModule,authModule,reModule],
   controllers: [AppController],
   providers: [],
 })

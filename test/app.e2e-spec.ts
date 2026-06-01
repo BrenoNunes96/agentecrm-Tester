@@ -11,10 +11,9 @@ import { response } from 'express';
 
 describe('Testes dos Módulos Usuario e Auth (e2e)', () => {
 
-  let token: any;
-  let usuarioId: any;
+let usuarioid:number
   let app: INestApplication;
-
+let token:any
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
@@ -37,57 +36,61 @@ describe('Testes dos Módulos Usuario e Auth (e2e)', () => {
     await app.close();
   })          
 
-
-it("01 - cadastro de usuario", async ()=>{
-const reposta = await request(app.getHttpServer())
-
+it("01 - cadastrar usuario",async ()=>{
+const resposta  = await request(app.getHttpServer())
 .post("/usuario/registrar")
 .send({
-  usuario:"string",
-  senha:"string"
-})
-.expect(201)
-usuarioId = reposta.body.id
+  "usuario":"string",
+  "senha":"string"
 
 })
-it("02 - logar com o usuario ", async ()=>{
+.expect(201)
+usuarioid = resposta.body.id
+
+})
+
+
+it("02 - logar usuario",async ()=>{
 const resposta = await request(app.getHttpServer())
 .post("/usuario/logar")
 .send({
-  usuario:"string",
-  senha:"string"
+"usuario":"string",
+"senha":"string"
 
 })
-
 .expect(200)
 token = resposta.body.token
+
 })
 
-it("03 - listar usuarios", async ()=>{
-console.log(token)
-return await request(app.getHttpServer())
+it("03 - lsitar todo usuarios",async ()=>{
+  await request(app.getHttpServer())
 .get("/usuario/")
 .set("Authorization",`${token}`)
 .send({})
 .expect(200)
-})
 
-it("04 - atualizar usuario" , async ()=>{
-return await request (app.getHttpServer())
+})
+it("04 - atualizar",async ()=>{
+  await request(app.getHttpServer())
 .put("/usuario/atualizar")
 .set("Authorization",`${token}`)
-.send({usuario:'stringss', senha:"dwqodi"})
-.expect(200)
+.send({
+  "usuario":"strings",
+  "senha":"strings"
 })
+.expect(200)
 
-it("05 deletar usuario",async ()=>{
-return await request(app.getHttpServer())
-.delete(`/usuario/deletar/${usuarioId}`)
+})
+it("05 - deletar usuario",async ()=>{
+await request(app.getHttpServer())
+.delete(`/usuario/deletar/${usuarioid}`)
 .set("Authorization",`${token}`)
 .send({})
 .expect(200)
-
 })
+
+
 
 
 

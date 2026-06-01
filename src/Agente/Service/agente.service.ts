@@ -82,9 +82,9 @@ console.log(registroExecucao)
 for(let x of registroExecucao){    // entra no array registroexecucao
 
 let indice = Object.keys(x)[0]
-for (let y of x[indice]){
+for (let y of x[indice]){             //  entra no registro apartir do indice 3,5,7
 
-i.push({[indice]: y['totaldeTokens']  })
+i.push({[indice]: y['totaldeTokens']  })        // junto no array 'i' indice de cada objeto com chave totaldetokens
 
 }
 
