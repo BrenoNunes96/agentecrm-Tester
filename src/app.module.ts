@@ -9,19 +9,21 @@ import { reModule } from './registroExecucoes/RE.module';
 
 import { usuarioEntity } from './usuario/entities/usuario.entity';
 import { UsuarioModule } from './usuario/usuario.module';
-import { authModule } from './auth/authModule.module';
+
 import { config } from 'process';
 import { ConfigModule } from '@nestjs/config';
 
-import { devServices } from './data/services/dev.service';
 import { prodService } from './data/services/prod.service';
+import { authModule } from './auth/authmodule.module';
+import { devServices } from './data/services/dev.service';
+
 
 @Module({
   imports:[
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
   useClass:prodService,
-  imports:[prodService]
+  imports:[devServices]
   }),AgenteModule,UsuarioModule,authModule,reModule],
   controllers: [AppController],
   providers: [],

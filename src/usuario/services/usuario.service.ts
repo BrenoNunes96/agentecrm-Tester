@@ -9,6 +9,7 @@ import { DeleteResult } from "typeorm/browser";
 import { Bcrypt } from "../../auth/bcrypt/bcrypt";
 
 
+
 export class usuarioService {
 
 constructor(  
@@ -51,7 +52,7 @@ throw new HttpException("mesmo usuario escolha outro",HttpStatus.BAD_REQUEST  )
 }
 
 
-        x.senha = await this.bcrypt.CryptgrafarSenha(x.senha)
+        x.senha = await this.bcrypt.CryptoGrafar(x.senha)
     return await this.usuario.save(x)
 
 }

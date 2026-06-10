@@ -3,7 +3,7 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
 import { AgenteEntity } from "../../Agente/Entities/agente.entity";
 import { registroEntity } from "../../registroExecucoes/entities/RE.entity";
 import { usuarioEntity } from "../../usuario/entities/usuario.entity";
-import { UsuarioLogin } from "../../auth/Entities/authEntity.entityt";
+import { UsuarioLogin } from "../../auth/entities/usuarioLogin.entities";
 
 
 export class devServices implements TypeOrmOptionsFactory{

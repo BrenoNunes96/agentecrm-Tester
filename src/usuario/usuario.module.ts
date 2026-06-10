@@ -4,8 +4,10 @@ import { usuarioEntity } from './entities/usuario.entity';
 import { usuarioService } from './services/usuario.service';
 import { usuarioController } from './controllers/usuario.controller';
 
-import { authModule } from '../auth/authModule.module';
+
 import { Bcrypt } from '../auth/bcrypt/bcrypt';
+import { authModule } from '../auth/authmodule.module';
+
 
 
 

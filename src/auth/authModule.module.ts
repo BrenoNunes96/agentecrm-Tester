@@ -1,29 +1,25 @@
 import { forwardRef, Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { UsuarioLogin } from "./Entities/authEntity.entityt";
-
-import { JwtModule } from "@nestjs/jwt";
-
-import { secretkey } from "./constans/secretkey";
-
 import { UsuarioModule } from "../usuario/usuario.module";
-import { AuthController } from "./controller/auth.controller";
-import { Bcrypt } from "./bcrypt/bcrypt";
-import { AuthService } from "./service/AuthService.service";
-import { jwtStrategy } from "./strategy/jwtStrategy.strategy";
-import { jwtGuard } from "./guard/jwtLocal.Guard";
-import { localGuard } from "./guard/localGuard.guard";
+import passport from "passport";
 import { PassportModule } from "@nestjs/passport";
-import { localStrategy } from "./strategy/localstrategy.strategy";
-
+import { JwtModule, JwtService } from "@nestjs/jwt";
+import { secretkey } from "./constants/secret";
+import { AuthController } from "./controllers/auth.controller";
+import { Bcrypt } from "./bcrypt/bcrypt";
+import { AuthService } from "./Service/authService.service";
+import { LocalGuard } from "./guards/localGuard.guard";
+import { LocalStrategy } from "./strategy/LocalStrategy.strategy";
+import { JwtStrategy } from "./strategy/jwtStrategy.strategy";
+import { jwtGuard } from "./guards/jwtGuard.guard";
+jwtGuard
 @Module({
-imports:[TypeOrmModule.forFeature([UsuarioLogin]),forwardRef(()=>UsuarioModule),PassportModule,JwtModule.register({
-signOptions:{expiresIn:"1h"},
-secret:secretkey.secretkey
+imports:[ forwardRef(()=>UsuarioModule),PassportModule,JwtModule.register({
+    signOptions:{expiresIn:"1h"},
+    secret:secretkey.secret
+
 })],
 controllers:[AuthController],
-providers:[Bcrypt,AuthService,jwtStrategy,jwtGuard,localGuard,localStrategy],
-exports:[Bcrypt]
-
+providers:[Bcrypt,AuthService,jwtGuard,LocalGuard,LocalStrategy,JwtStrategy],
+exports:[Bcrypt,AuthService]
 })
-export class authModule {}
+export class authModule{}

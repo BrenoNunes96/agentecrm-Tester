@@ -1,37 +1,40 @@
 import { forwardRef, HttpException, HttpStatus, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { usuarioService } from "../../usuario/services/usuario.service";
-import { UsuarioLogin } from "../Entities/authEntity.entityt";
+import { UsuarioLogin } from "../entities/usuarioLogin.entities";
 import { Bcrypt } from "../bcrypt/bcrypt";
 import { JwtService } from "@nestjs/jwt";
+
 @Injectable()
-export  class  AuthService{
+export class AuthService{
+
+constructor( @Inject(forwardRef(()=>usuarioService)) private readonly usuarioService:usuarioService,private readonly bcrypt:Bcrypt,private readonly jwt:JwtService){}
+
+async validarUser(usuario:string,senha:string):Promise<UsuarioLogin>{
     
-constructor(@Inject(forwardRef(()=>usuarioService)) private readonly usuarioServices:usuarioService,private readonly jwt:JwtService,private bcrypt:Bcrypt){
+    let buscarusuario = await this.usuarioService.findbyname(usuario)
+if(!buscarusuario)throw new HttpException("usuario ou senha não correspondem",HttpStatus.NOT_FOUND)
+console.log(senha)
 
-}
-
-async validarUser(usuario:string,senha:string ):Promise<any>{ // validação login para verificar se existe no banco de dados
- const buscarUsuario = await this.usuarioServices.findbyname(usuario) // acha o nome no banco com o usuario enviado
-if(!buscarUsuario)throw new HttpException("usuario ou senha não corresposndem",HttpStatus.NOT_FOUND) // se n achar para aplicaçao
-
-const compararSenha = await this.bcrypt.CompararSenha(senha,buscarUsuario.senha) // tenta achar senha no banco
-if(!compararSenha)throw new HttpException("usuario ou senha não correspondem",HttpStatus.NOT_FOUND)
-
-return buscarUsuario // retorna os dados do banco do usaurio com o mesmo usuario cadastrado enviado no login
-
+let compararSenha = await this.bcrypt.compararSenha(senha,buscarusuario?.senha)
+if(compararSenha)throw new UnauthorizedException("usuario ou senha não correspondem")
+    
+return buscarusuario
 }
 
 
-async login(usuario:string,senha:string):Promise<any>{
-let buscarUsuario = await this.usuarioServices.findbyname(usuario) // busca no banco usuario com o mesmo usuario enviado 
-const payload = {sub:buscarUsuario?.usuario}
+
+
+async login(x:UsuarioLogin):Promise<any>{
+const buscarusuario = await this.usuarioService.findbyname(x.usuario)
+const payload = { sub:buscarusuario?.usuario}
 return{
-id:buscarUsuario?.id,
-usuario:buscarUsuario?.usuario,
-token:`Bearer ${this.jwt.sign(payload)} `
+id:buscarusuario?.id,
+usuario:buscarusuario?.usuario,
+token:`bearer ${this.jwt.sign(payload)}`
 
 
 }
 }
+
 
 }

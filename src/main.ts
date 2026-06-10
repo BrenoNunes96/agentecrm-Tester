@@ -9,14 +9,17 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 const config = new DocumentBuilder()
-.setTitle("agente de ia")
-.setContact("breno nunes","www.agente.com","brenocp3@live.com")
+.setTitle("agente de crm ia")
+.setContact("Agente corp","www.agente.com.br","brenocp3@live.com")
+.setDescription("cadastro de ias ")
 .setVersion("1.0")
 .addBearerAuth()
 .build()
+
 const document = SwaggerModule.createDocument(app,config)
 
-SwaggerModule.setup("swagger",app,document)
+SwaggerModule.setup('swagger',app,document)
+
 
   await app.listen(process.env.PORT ?? 4000);
 }

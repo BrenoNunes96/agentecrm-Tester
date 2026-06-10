@@ -4,7 +4,8 @@ import { usuarioEntity } from "../entities/usuario.entity";
 
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { DeleteResult } from "typeorm";
-import { jwtGuard } from "../../auth/guard/jwtLocal.Guard";
+import { jwtGuard } from "../../auth/guards/jwtGuard.guard";
+jwtGuard
 
 @ApiBearerAuth()
 @ApiTags("usuarios")

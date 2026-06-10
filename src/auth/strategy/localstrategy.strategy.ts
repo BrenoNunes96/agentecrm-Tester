@@ -1,21 +1,22 @@
-import { PassportStrategy } from "@nestjs/passport"
-import { Strategy } from "passport-local"
-import { AuthService } from "../service/AuthService.service"
-import { Injectable } from "@nestjs/common"
+import { Injectable } from "@nestjs/common";
+import { PassportStrategy } from "@nestjs/passport";
+import { Strategy } from "passport-local";
+import { UsuarioLogin } from "../entities/usuarioLogin.entities";
+import { AuthService } from "../Service/authService.service";
 @Injectable()
+export class LocalStrategy extends PassportStrategy(Strategy,'local'){
+  private _usernameField:string
+   private _passwordField:string
 
-export class localStrategy extends PassportStrategy(Strategy,'local'){
-private _usernameField:string
-private _passwordField:string
- constructor(private readonly authservice:AuthService){
-super()
-this._usernameField = 'usuario'                             
-this._passwordField ='senha'
- }
+     constructor(private readonly authService:AuthService){
+        super()
+        this._passwordField ="senha",
+        this._usernameField ="usuario"
 
-async validate(usuario:string,senha:string):Promise<AuthService>{
-return this.authservice.validarUser(usuario,senha)
+     }
+async validate(usuario:string,senha:string):Promise<any>{
+return  this.authService.validarUser(usuario,senha)
+
 }
-
 
 }

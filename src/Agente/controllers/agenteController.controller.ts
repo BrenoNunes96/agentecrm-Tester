@@ -4,7 +4,8 @@ import { AgenteEntity } from "../Entities/agente.entity";
 import { DeleteResult } from "typeorm";
 
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { jwtGuard } from "../../auth/guard/jwtLocal.Guard";
+import { jwtGuard } from "../../auth/guards/jwtGuard.guard";
+
 
 
 
@@ -15,6 +16,13 @@ export class AgenteController{
 
   constructor(private agenteService: AgenteService){}
 
+
+@Delete("/:id")
+@UseGuards(jwtGuard)
+@HttpCode(HttpStatus.OK)
+async deletar(@Param('id',ParseIntPipe ) x:number):Promise<DeleteResult>{
+  return await this.agenteService.Delete(x)
+}
 
 @Post("/registrar")
 @UseGuards(jwtGuard)
