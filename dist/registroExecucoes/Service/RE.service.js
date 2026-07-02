@@ -28,7 +28,7 @@ let registroService = class registroService {
     async create(x) {
         let agenteBanco = await this.agenteService.findById(x.agente.id);
         console.log(x);
-        if (agenteBanco?.Status === 'Ativo') {
+        if (agenteBanco?.Status === 'true') {
             x.totaldeTokens = x.quantidadeDeTokensDeSaida + x.quantidadeDeTokensDeEntrada;
             agenteBanco['LimiteMaxMensal'] -= x.quantidadeDeTokensDeSaida + x.quantidadeDeTokensDeEntrada;
             if (agenteBanco.LimiteMaxMensal < 0) {

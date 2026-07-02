@@ -2,7 +2,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { registroEntity } from "../entities/RE.entity";
 import { Repository } from "typeorm";
 import { HttpException, HttpStatus } from "@nestjs/common";
-import { AgenteEntity } from "../../Agente/Entities/agente.entity";
 import { AgenteService } from "../../Agente/Service/agente.service";
 
 export class registroService{
@@ -15,7 +14,7 @@ async create(x:registroEntity):Promise<registroEntity | undefined>{
 
 console.log(x)
 
- if(agenteBanco?.Status ==='Ativo'){     // caso  seja  agente.Status ativo e caso exista o agente que se quer relacionar
+ if(agenteBanco?.Status ==='true'){     // caso  seja  agente.Status ativo e caso exista o agente que se quer relacionar
  
 x.totaldeTokens = x.quantidadeDeTokensDeSaida +x.quantidadeDeTokensDeEntrada // soma total de tokens
       

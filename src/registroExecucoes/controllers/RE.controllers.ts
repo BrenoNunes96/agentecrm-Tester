@@ -4,7 +4,7 @@ import { registroService } from "../Service/RE.service";
 
 import { ApiBearerAuth, ApiProperty, ApiTags } from "@nestjs/swagger";
 import { jwtGuard } from "../../auth/guards/jwtGuard.guard";
-jwtGuard
+
 
 
    @ApiTags('registroExecução') 

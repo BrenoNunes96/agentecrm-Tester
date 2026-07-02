@@ -18,7 +18,6 @@ const RE_entity_1 = require("../entities/RE.entity");
 const RE_service_1 = require("../Service/RE.service");
 const swagger_1 = require("@nestjs/swagger");
 const jwtGuard_guard_1 = require("../../auth/guards/jwtGuard.guard");
-jwtGuard_guard_1.jwtGuard;
 let registroController = class registroController {
     registroService;
     constructor(registroService) {

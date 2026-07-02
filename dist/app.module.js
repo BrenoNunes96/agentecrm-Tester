@@ -14,7 +14,6 @@ const agente_module_1 = require("./Agente/agente.module");
 const RE_module_1 = require("./registroExecucoes/RE.module");
 const usuario_module_1 = require("./usuario/usuario.module");
 const config_1 = require("@nestjs/config");
-const prod_service_1 = require("./data/services/prod.service");
 const authmodule_module_1 = require("./auth/authmodule.module");
 const dev_service_1 = require("./data/services/dev.service");
 let AppModule = class AppModule {
@@ -25,7 +24,7 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot(),
             typeorm_1.TypeOrmModule.forRootAsync({
-                useClass: prod_service_1.prodService,
+                useClass: dev_service_1.devServices,
                 imports: [dev_service_1.devServices]
             }), agente_module_1.AgenteModule, usuario_module_1.UsuarioModule, authmodule_module_1.authModule, RE_module_1.reModule
         ],

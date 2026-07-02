@@ -19,6 +19,7 @@ mensagemDeEntrada !: string
 mensagemDeSaida ! : string
 
 @Column({"type":"int",nullable:false})
+@ApiProperty()
 quantidadeDeTokensDeEntrada !: number
 
 @Column({"type":"int",nullable:false})
@@ -30,8 +31,9 @@ quantidadeDeTokensDeSaida !: number
 totaldeTokens !: number
 
 @Column({"type":"decimal",precision:9,scale:2,nullable:false})
-
+@ApiProperty()
 tempoDeExecucaoEmMilissegundos !: number
+
 
 @ManyToOne(()=> AgenteEntity,(x)=>x['registroExecucao'],{
     onDelete: 'CASCADE'

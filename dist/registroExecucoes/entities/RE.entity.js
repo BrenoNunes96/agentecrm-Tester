@@ -41,6 +41,7 @@ __decorate([
 ], registroEntity.prototype, "mensagemDeSaida", void 0);
 __decorate([
     (0, typeorm_1.Column)({ "type": "int", nullable: false }),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
 ], registroEntity.prototype, "quantidadeDeTokensDeEntrada", void 0);
 __decorate([
@@ -55,6 +56,7 @@ __decorate([
 ], registroEntity.prototype, "totaldeTokens", void 0);
 __decorate([
     (0, typeorm_1.Column)({ "type": "decimal", precision: 9, scale: 2, nullable: false }),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
 ], registroEntity.prototype, "tempoDeExecucaoEmMilissegundos", void 0);
 __decorate([
