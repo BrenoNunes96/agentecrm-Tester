@@ -10,7 +10,7 @@ private readonly agenteService:AgenteService
 ){}
 
 async create(x:registroEntity):Promise<registroEntity | undefined>{
-    let agenteBanco = await this.agenteService.findById(x.agente.id)  // procura no banco Agente , numero do agente que se quer relacionar 
+    const agenteBanco = await this.agenteService.findById(x.agente.id)  // procura no banco Agente , numero do agente que se quer relacionar 
 
 console.log(x)
 

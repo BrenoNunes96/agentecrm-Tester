@@ -1,4 +1,4 @@
-import { TypeOrmModule, TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
+import {  TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
 
 export class prodService implements TypeOrmOptionsFactory{
 createTypeOrmOptions():TypeOrmModuleOptions{

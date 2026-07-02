@@ -1,4 +1,3 @@
-import { Injectable } from "@nestjs/common";
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
 import { AgenteEntity } from "../../Agente/Entities/agente.entity";
 import { registroEntity } from "../../registroExecucoes/entities/RE.entity";

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { AgenteEntity } from "../../Agente/Entities/agente.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
