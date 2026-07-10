@@ -19,7 +19,7 @@ imports:[ forwardRef(()=>UsuarioModule),PassportModule,JwtModule.register({
 
 })],
 controllers:[AuthController],
-providers:[Bcrypt,AuthService,jwtGuard,LocalGuard,LocalStrategy,JwtStrategy],
+providers:[Bcrypt,AuthService,jwtGuard,LocalGuard,LocalStrategy,jwtGuard,JwtStrategy],
 exports:[Bcrypt,AuthService]
 })
 export class AuthModule{}
