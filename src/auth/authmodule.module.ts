@@ -6,10 +6,10 @@ import { JwtModule} from "@nestjs/jwt";
 import { secretkey } from "./constants/secret";
 import { AuthController } from "./controllers/auth.controller";
 import { Bcrypt } from "./bcrypt/bcrypt";
-import { AuthService } from "./Service2/authService.service";
+import { AuthService } from "./Service/authService.service";
 import { LocalGuard } from "./guards/localGuard.guard";
-import { LocalStrategy } from "./strategy2/LocalStrategy.strategy";
-import { JwtStrategy } from "./strategy2/jwtStrategy.strategy";
+import { LocalStrategy } from "./strategy/LocalStrategy.strategy";
+import { JwtStrategy } from "./strategy/jwtStrategy.strategy";
 import { jwtGuard } from "./guards/jwtGuard.guard";
 
 @Module({

@@ -13,7 +13,7 @@ import { ConfigModule } from '@nestjs/config';
 import { prodService } from './data/services/prod.service';
 
 import { devServices } from './data/services/dev.service';
-import { AuthModule } from './auth/auth2';
+import { AuthModule } from './auth/authmodule.module';
 
 @Module({
   imports:[
