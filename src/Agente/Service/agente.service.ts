@@ -3,9 +3,6 @@ import { AgenteEntity } from "../Entities/agente.entity";
 import { Any, ILike, Index, Repository } from "typeorm";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { DeleteResult } from "typeorm/browser";
-import { registroEntity } from "../../registroExecucoes/entities/RE.entity";
-import { totalmem } from "os";
-import { isAwaitKeyword } from "typescript";
 
 @Injectable()
 export class AgenteService{
@@ -27,7 +24,7 @@ async Findall():Promise<AgenteEntity []>{
 
 
 async findByName(NomeAgente:string):Promise<AgenteEntity | null>{
-
+  
      
   if(!NomeAgente){ throw new HttpException("não foi possivel achar o nome do agente",HttpStatus.NOT_FOUND)}
 

@@ -19,7 +19,7 @@ import { devServices } from './data/services/dev.service';
   imports:[
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
-  useClass:prodService,
+  useClass:devServices,
   imports:[devServices]
   }),AgenteModule,UsuarioModule,authModule,reModule],
   controllers: [AppController],

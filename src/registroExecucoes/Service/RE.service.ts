@@ -1,23 +1,95 @@
+import { Content } from './../../../node_modules/cohere-ai/api/types/Content.d';
+import { Message } from './../../../node_modules/cohere-ai/api/types/Message.d';
+
 import { InjectRepository } from "@nestjs/typeorm";
 import { registroEntity } from "../entities/RE.entity";
 import { Repository } from "typeorm";
 import { HttpException, HttpStatus } from "@nestjs/common";
-import { AgenteService } from "../../Agente/Service/agente.service";
+import { AgenteService } from "../../Agente/Service/agente.service"; 
+import { timingSafeEqual } from 'crypto';
+import { empty, timestamp } from 'rxjs';
+import { time } from 'console';
+
+
 
 export class registroService{
+  
+  
 constructor(@InjectRepository(registroEntity)  private readonly registroEntity: Repository<registroEntity> ,
-private readonly agenteService:AgenteService
+private readonly agenteService:AgenteService 
 ){}
 
-async create(x:registroEntity):Promise<registroEntity | undefined>{
+async consultar(x:registroEntity):Promise<any>{
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
+const { CohereClientV2 } = require('cohere-ai');
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+const cohere = new CohereClientV2({
+  token: '0fYdk1HpYMLGUfE4qdql4IbnCXgXrQGQi8cQLlQm',
+});
+try {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  const response:object = await cohere.chat({
+    model: 'command-a-plus-05-2026',
+    messages: [
+      {
+        role: 'user',
+        content:x.mensagemDeEntrada
+      },
+    ],
+  });
+    return response
+
+}catch (error) {
+  console.log(error)
+}
+
+
+}
+
+  
+async create(x:any):Promise<registroEntity | undefined>{
     const agenteBanco = await this.agenteService.findById(x.agente.id)  // procura no banco Agente , numero do agente que se quer relacionar 
+    const inicio =  performance.now()
+const ia:any = await this.consultar(x)
 
+const final = performance.now()
+
+
+let perfomanceTime:Number = Number((final-inicio).toFixed(2))
+x.tempoDeExecucaoEmMilissegundos = perfomanceTime
 console.log(x)
+console.log(ia)
+ x.quantidadeDeTokensDeEntrada = ia.usage.billedUnits.inputTokens
+x.quantidadeDeTokensDeSaida = ia.usage.billedUnits.outputTokens
+x.totaldeTokens = x.quantidadeDeTokensDeSaida +x.quantidadeDeTokensDeEntrada // soma total de tokens
 
- if(agenteBanco?.Status ==='true'){     // caso  seja  agente.Status ativo e caso exista o agente que se quer relacionar
+if(ia.message.content.length > 1){
+  console.log("mais de um elemento dentro do array")
+
+ x['think'] = ia.message.content[0]['type']
+x['thinking'] = ia.message.content[0]['thinking']
+x.mensagemDeSaida = ia.message.content[1].text
+  console.log(ia.message.content[0]['type']+ "...")
+  console.log(ia.message.content[0]['thinking'])
+  console.log(x.mensagemDeSaida)
+  
+}else{
+x.mensagemDeSaida = ia.message.content[0].text
+console.log(ia.message.content[0]['text'])
+
+}
+
+
+console.log(x.totaldeTokens)
+
+
+console.log("entrou")
+
+ if(agenteBanco?.Status ==='Ativo'){     // caso  seja  agente.Status ativo e caso exista o agente que se quer relacionar
  
 x.totaldeTokens = x.quantidadeDeTokensDeSaida +x.quantidadeDeTokensDeEntrada // soma total de tokens
-      
+
        agenteBanco['LimiteMaxMensal'] -= x.quantidadeDeTokensDeSaida +x.quantidadeDeTokensDeEntrada   // att limite deste agente
     
      if(agenteBanco.LimiteMaxMensal < 0 ){         // caso o limite do agente requisitado no registroexecucao esteja com limitemnesal menor que zero entao da BAD_REQUEST
@@ -28,14 +100,13 @@ x.totaldeTokens = x.quantidadeDeTokensDeSaida +x.quantidadeDeTokensDeEntrada // 
         
       }
      await this.agenteService.Updated(agenteBanco)        // atualiza o agente agora com o limitemensal atual
+     
       
- return this.registroEntity.save(x)
+ return  this.registroEntity.save(x)
 
     }  
-        
+
 }
 
     }
-
-
 
