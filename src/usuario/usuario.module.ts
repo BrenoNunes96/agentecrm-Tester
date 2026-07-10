@@ -6,7 +6,7 @@ import { usuarioController } from './controllers/usuario.controller';
 
 
 import { Bcrypt } from '../auth/bcrypt/bcrypt';
-import { AuthModule } from '../auth/authmodule.module';
+import { AuthModule } from '../auth/auth2';
 
 
 
