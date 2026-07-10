@@ -1,4 +1,3 @@
-import { Content } from './../../../node_modules/cohere-ai/api/types/Content.d';
 import { Message } from './../../../node_modules/cohere-ai/api/types/Message.d';
 
 import { InjectRepository } from "@nestjs/typeorm";

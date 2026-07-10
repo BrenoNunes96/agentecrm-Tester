@@ -11,11 +11,10 @@ constructor( @Inject(forwardRef(()=>usuarioService)) private readonly usuarioSer
 
 async validarUser(usuario:string,senha:string):Promise<UsuarioLogin>{
     
-    let buscarusuario = await this.usuarioService.findbyname(usuario)
+ const buscarusuario = await this.usuarioService.findbyname(usuario)
 if(!buscarusuario)throw new HttpException("usuario ou senha não correspondem",HttpStatus.NOT_FOUND)
 console.log(senha)
-
-let compararSenha = await this.bcrypt.compararSenha(senha,buscarusuario?.senha)
+const compararSenha = await this.bcrypt.compararSenha(senha,buscarusuario?.senha)
 if(compararSenha)throw new UnauthorizedException("usuario ou senha não correspondem")
     
 return buscarusuario
