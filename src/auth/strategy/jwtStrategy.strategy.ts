@@ -14,7 +14,7 @@ constructor(){
 }
 
 async validate(payload:any):Promise<any>{
-    return payload
+    return await payload
 }
 
 }

@@ -11,7 +11,7 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { ConfigModule } from '@nestjs/config';
 
 import { prodService } from './data/services/prod.service';
-import { authModule } from './auth/authmodule.module';
+import { AuthModule } from './auth/authmodule.module';
 import { devServices } from './data/services/dev.service';
 
 
@@ -21,7 +21,7 @@ import { devServices } from './data/services/dev.service';
     TypeOrmModule.forRootAsync({
   useClass:prodService,
   imports:[devServices]
-  }),AgenteModule,UsuarioModule,authModule,reModule],
+  }),AgenteModule,UsuarioModule,AuthModule,reModule],
   controllers: [AppController],
   providers: [],
 })

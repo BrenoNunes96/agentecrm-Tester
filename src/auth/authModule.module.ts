@@ -22,4 +22,4 @@ controllers:[AuthController],
 providers:[Bcrypt,AuthService,jwtGuard,LocalGuard,LocalStrategy,JwtStrategy],
 exports:[Bcrypt,AuthService]
 })
-export class authModule{}
+export class AuthModule{}

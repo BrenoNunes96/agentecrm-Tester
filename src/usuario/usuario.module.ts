@@ -6,13 +6,13 @@ import { usuarioController } from './controllers/usuario.controller';
 
 
 import { Bcrypt } from '../auth/bcrypt/bcrypt';
-import { authModule } from '../auth/authmodule.module';
+import { AuthModule } from '../auth/authmodule.module';
 
 
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([usuarioEntity]),forwardRef(()=>authModule)], 
+  imports: [TypeOrmModule.forFeature([usuarioEntity]),forwardRef(()=>AuthModule)], 
   providers: [usuarioService,Bcrypt],
   controllers: [usuarioController],
   exports: [usuarioService],

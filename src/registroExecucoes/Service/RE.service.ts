@@ -1,13 +1,10 @@
-import { Message } from './../../../node_modules/cohere-ai/api/types/Message.d';
+
 
 import { InjectRepository } from "@nestjs/typeorm";
 import { registroEntity } from "../entities/RE.entity";
 import { Repository } from "typeorm";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { AgenteService } from "../../Agente/Service/agente.service"; 
-import { timingSafeEqual } from 'crypto';
-import { empty, timestamp } from 'rxjs';
-import { time } from 'console';
 
 
 
