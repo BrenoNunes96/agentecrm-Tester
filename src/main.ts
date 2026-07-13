@@ -19,7 +19,9 @@ const config = new DocumentBuilder()
 const document = SwaggerModule.createDocument(app,config)
 
 SwaggerModule.setup('swagger',app,document)
-
+app.enableCors({
+  origin: true,
+});
 
   await app.listen(process.env.PORT ?? 4000);
 }
