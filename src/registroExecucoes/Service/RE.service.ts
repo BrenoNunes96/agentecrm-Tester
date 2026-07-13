@@ -1,18 +1,19 @@
 
 
+
+
 import { InjectRepository } from "@nestjs/typeorm";
 import { registroEntity } from "../entities/RE.entity";
 import { Repository } from "typeorm";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { AgenteService } from "../../Agente/Service/agente.service"; 
-
-
+import { Bcrypt } from "../../auth/bcrypt/bcrypt";
 
 export class registroService{
   
   
 constructor(@InjectRepository(registroEntity)  private readonly registroEntity: Repository<registroEntity> ,
-private readonly agenteService:AgenteService 
+private readonly agenteService:AgenteService , private readonly bcrypt:Bcrypt
 ){}
 
 async consultar(x:registroEntity):Promise<any>{
@@ -21,7 +22,7 @@ async consultar(x:registroEntity):Promise<any>{
 const { CohereClientV2 } = require('cohere-ai');
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 const cohere = new CohereClientV2({
-  token: '0fYdk1HpYMLGUfE4qdql4IbnCXgXrQGQi8cQLlQm',
+  token: process.env.COHERE_API_KEY,
 });
 try {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
