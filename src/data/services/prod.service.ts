@@ -5,13 +5,14 @@ createTypeOrmOptions():TypeOrmModuleOptions{
 return{
     type:'postgres',
     url:process.env.DATABASE_URL,
-    dropSchema:true,
+    dropSchema:false,
     logging:false,
+    
     ssl:{
         rejectUnauthorized:false
     },
     autoLoadEntities:true,
-    synchronize:false
+    synchronize:true
 }   
 
 
