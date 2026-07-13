@@ -16,10 +16,13 @@ import { AuthModule } from './auth/authmodule.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+        isGlobal:true
+    }),
     TypeOrmModule.forRootAsync({
       useClass: prodService,
       imports: [devServices],
+      
     }),
     AgenteModule,
     UsuarioModule,

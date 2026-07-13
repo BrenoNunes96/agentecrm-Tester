@@ -12,7 +12,7 @@ export class registroEntity {
   @ApiProperty()
   mensagemDeEntrada!: string;
 
-  @Column({ length: 255, nullable: false })
+  @Column({ length: 700, nullable: false })
   @ApiProperty()
   mensagemDeSaida!: string;
 

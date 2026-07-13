@@ -13,11 +13,13 @@ export class registroService {
   ) {}
 
   async consultar(x: registroEntity): Promise<any> {
+      console.log(process.env.CO_API_KEY)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
     const { CohereClientV2 } = require('cohere-ai');
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     const cohere = new CohereClientV2({
-      token: process.env.COHERE_API_KEY,
+    
+      token:process.env.CO_API_KEY
     });
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
@@ -70,7 +72,7 @@ export class registroService {
 
     console.log('entrou');
 
-    if (agenteBanco?.Status === 'Ativo') {
+    if (agenteBanco?.Status === 'true') {
       // caso  seja  agente.Status ativo e caso exista o agente que se quer relacionar
 
       x.totaldeTokens =

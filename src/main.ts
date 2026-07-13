@@ -1,28 +1,33 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import process from 'process';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+  import { NestFactory } from '@nestjs/core';
+  import { AppModule } from './app.module';
+  import process from 'process';
+  import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+  import { ValidationPipe } from '@nestjs/common';
+  import 'dotenv/config';
+  import { ConfigModule } from '@nestjs/config';
+  async function bootstrap() {
+    const app = await NestFactory.create(AppModule);
+    
+  console.log('API:', process.env.CO_API_KEY);
+    app.useGlobalPipes(new ValidationPipe());
+    const config = new DocumentBuilder()
+      .setTitle('agente de crm ia')
+      .setContact('Agente corp', 'www.agente.com.br', 'brenocp3@live.com')
+      .setDescription('cadastro de ias ')
+      .setVersion('1.0')
+      .addBearerAuth()
+      .build();
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+    const document = SwaggerModule.createDocument(app, config);
 
-  app.useGlobalPipes(new ValidationPipe());
-  const config = new DocumentBuilder()
-    .setTitle('agente de crm ia')
-    .setContact('Agente corp', 'www.agente.com.br', 'brenocp3@live.com')
-    .setDescription('cadastro de ias ')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
+    SwaggerModule.setup('swagger', app, document);
+    app.enableCors({
+      origin: true,
+    });
+    ConfigModule.forRoot({
+      isGlobal:true
+    })
 
-  const document = SwaggerModule.createDocument(app, config);
-
-  SwaggerModule.setup('swagger', app, document);
-  app.enableCors({
-    origin: true,
-  });
-
-  await app.listen(process.env.PORT ?? 4000);
-}
-bootstrap();
+    await app.listen(process.env.PORT ?? 4000);
+  }
+  bootstrap();
