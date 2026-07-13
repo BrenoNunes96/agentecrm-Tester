@@ -1,66 +1,62 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseArrayPipe, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
-import { usuarioService } from "../services/usuario.service";
-import { usuarioEntity } from "../entities/usuario.entity";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseArrayPipe,
+  ParseIntPipe,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
+import { usuarioService } from '../services/usuario.service';
+import { usuarioEntity } from '../entities/usuario.entity';
 
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { DeleteResult } from "typeorm";
-import { jwtGuard } from "../../auth/guards/jwtGuard.guard";
-jwtGuard
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { DeleteResult } from 'typeorm';
+import { jwtGuard } from '../../auth/guards/jwtGuard.guard';
+jwtGuard;
 
 @ApiBearerAuth()
-@ApiTags("usuarios")
-@Controller("/usuario")
+@ApiTags('usuarios')
+@Controller('/usuario')
+export class usuarioController {
+  constructor(private readonly usuarioService: usuarioService) {}
 
-export class usuarioController{
-constructor( private readonly usuarioService:usuarioService  ){}
+  @Post('/registrar')
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() x: usuarioEntity): Promise<usuarioEntity> {
+    return this.usuarioService.create(x);
+  }
 
-@Post("/registrar")
-@HttpCode(HttpStatus.CREATED)
+  @UseGuards(jwtGuard)
+  @Put('/atualizar')
+  @HttpCode(HttpStatus.OK)
+  async atualizar(@Body() x: usuarioEntity): Promise<usuarioEntity> {
+    return this.usuarioService.atualizar(x);
+  }
 
-async create(@Body() x:usuarioEntity):Promise<usuarioEntity>{
+  @UseGuards(jwtGuard)
+  @Get('/')
+  @HttpCode(HttpStatus.OK)
+  async findAll(): Promise<usuarioEntity[]> {
+    return this.usuarioService.findAll();
+  }
 
-    return this.usuarioService.create(x)
-}
+  @UseGuards(jwtGuard)
+  @Delete('/deletar/:id')
+  async deletar(@Param('id', ParseIntPipe) id: number): Promise<DeleteResult> {
+    return this.usuarioService.deletar(id);
+  }
 
-@UseGuards(jwtGuard)
-@Put("/atualizar")
-@HttpCode(HttpStatus.OK)
-async atualizar(@Body() x:usuarioEntity):Promise<usuarioEntity>{
-return this.usuarioService.atualizar(x)
-
-}
-
-
-@UseGuards(jwtGuard)
-@Get("/")
-@HttpCode(HttpStatus.OK)
-async findAll():Promise<usuarioEntity []>{
-
-    return this.usuarioService.findAll()
-}
-
-@UseGuards(jwtGuard)
-@Delete("/deletar/:id")
-async deletar(@Param('id',ParseIntPipe ) id:number):Promise<DeleteResult>{
-    return this.usuarioService.deletar(id)
-}
-
-
-
-
-
-
-
-
-
-@UseGuards(jwtGuard)
-@Get("/:nome") 
-@HttpCode(HttpStatus.OK)
-async findByName(@Param('nome') nome: string): Promise<usuarioEntity | null> {
+  @UseGuards(jwtGuard)
+  @Get('/:nome')
+  @HttpCode(HttpStatus.OK)
+  async findByName(@Param('nome') nome: string): Promise<usuarioEntity | null> {
     // Agora o NestJS extrai o "Joao" da URL /usuario/Joao
     return this.usuarioService.findbyname(nome);
-}
-
-
-
+  }
 }

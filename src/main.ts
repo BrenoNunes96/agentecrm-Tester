@@ -8,20 +8,20 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe());
-const config = new DocumentBuilder()
-.setTitle("agente de crm ia")
-.setContact("Agente corp","www.agente.com.br","brenocp3@live.com")
-.setDescription("cadastro de ias ")
-.setVersion("1.0")
-.addBearerAuth()
-.build()
+  const config = new DocumentBuilder()
+    .setTitle('agente de crm ia')
+    .setContact('Agente corp', 'www.agente.com.br', 'brenocp3@live.com')
+    .setDescription('cadastro de ias ')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
 
-const document = SwaggerModule.createDocument(app,config)
+  const document = SwaggerModule.createDocument(app, config);
 
-SwaggerModule.setup('swagger',app,document)
-app.enableCors({
-  origin: true,
-});
+  SwaggerModule.setup('swagger', app, document);
+  app.enableCors({
+    origin: true,
+  });
 
   await app.listen(process.env.PORT ?? 4000);
 }
