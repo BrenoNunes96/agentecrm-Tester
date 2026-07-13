@@ -13,7 +13,7 @@ export class registroController {
   @ApiBearerAuth()
   @UseGuards(jwtGuard)
   @Post('/registrar')
-  async create(@Body() x: any): Promise<registroEntity | undefined> {
+  async create(@Body() x: any): Promise< any | undefined> {
     return await this.registroService.create(x);
   }
 }
