@@ -9,10 +9,10 @@ import { jwtGuard } from '../../auth/guards/jwtGuard.guard';
 @Controller('/registroExecucao')
 export class registroController {
   constructor(private readonly registroService: registroService) {}
-  
+
+  @Post('/registrar')
   @UseGuards(jwtGuard)
   @HttpCode(HttpStatus.CREATED)
-  @Post('/registrar')
   async create(@Body() x: any): Promise< registroEntity | undefined> {
     return await this.registroService.create(x);
   }
