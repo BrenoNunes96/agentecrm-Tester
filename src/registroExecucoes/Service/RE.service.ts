@@ -38,7 +38,7 @@ export class registroService {
     }
   }
 
-  async create(x: any): Promise<registroEntity> {
+  async create(x: any): Promise<registroEntity | undefined> {
     const agenteBanco = await this.agenteService.findById(x.agente.id); // procura no banco Agente , numero do agente que se quer relacionar
     const inicio = performance.now();
     const ia: any = await this.consultar(x);
@@ -94,7 +94,5 @@ export class registroService {
 
       return this.registroEntity.save(x);
     }
-          return this.registroEntity.save(x);
-
   }
 }
