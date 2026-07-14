@@ -11,7 +11,9 @@ import { UsuarioLogin } from '../entities/usuarioLogin.entities';
 import { AuthService } from '../Service/authService.service';
 
 import { LocalGuard } from '../guards/localGuard.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+ApiTags("auth")
 @Injectable()
 @Controller('/usuario')
 export class AuthController {
