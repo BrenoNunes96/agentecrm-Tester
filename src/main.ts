@@ -8,7 +8,6 @@
   async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     
-  console.log('API:', process.env.CO_API_KEY);
     app.useGlobalPipes(new ValidationPipe());
     const config = new DocumentBuilder()
       .setTitle('agente de crm ia')

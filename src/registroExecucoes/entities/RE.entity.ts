@@ -35,5 +35,6 @@ export class registroEntity {
   @ManyToOne(() => AgenteEntity, (x) => x['registroExecucao'], {
     onDelete: 'CASCADE',
   })
+    @ApiProperty()
   agente!: AgenteEntity;
 }
