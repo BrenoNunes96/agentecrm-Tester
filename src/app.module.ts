@@ -20,7 +20,7 @@ import { AuthModule } from './auth/authmodule.module';
         isGlobal:true
     }),
     TypeOrmModule.forRootAsync({
-      useClass: devServices,
+      useClass: prodService,
       imports: [devServices],
       
     }),

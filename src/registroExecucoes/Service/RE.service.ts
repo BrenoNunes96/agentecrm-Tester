@@ -94,5 +94,6 @@ export class registroService {
 
       return this.registroEntity.save(x);
     }
+    return x
   }
 }
