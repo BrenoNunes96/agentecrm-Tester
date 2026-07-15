@@ -12,8 +12,8 @@ import { jwtGuard } from '../../auth/guards/jwtGuard.guard';
 export class registroController {
   constructor(private readonly registroService: registroService) {}
 
-  @Post('/registrar')
   @UseGuards(jwtGuard)
+  @Post('/registrar')
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() x: registroEntity): Promise< registroEntity | undefined> {
     return await this.registroService.create(x);
