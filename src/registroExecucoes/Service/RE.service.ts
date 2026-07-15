@@ -22,6 +22,7 @@ export class registroService {
       token:process.env.CO_API_KEY
     });
     try {
+      console.log('entrou NA API COHERE')
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       const response: object = await cohere.chat({
         model: 'command-a-plus-05-2026',
@@ -34,6 +35,7 @@ export class registroService {
       });
       return response;
     } catch (error) {
+    
       console.log(error);
     }
   }
