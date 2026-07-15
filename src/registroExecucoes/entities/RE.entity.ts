@@ -8,35 +8,32 @@ export class registroEntity {
 
   id!: number;
 
+    @ApiProperty()
   @Column({ length: 255, nullable: false })
-  @ApiProperty()
-  mensagemDeEntrada!: string;
-  @ApiProperty()
 
-  @Column({ length: 700, nullable: false })
+  mensagemDeEntrada!: string;
+
   @ApiProperty()
+  @Column({ length: 700, nullable: false })
 
   mensagemDeSaida!: string;
   @ApiProperty()
-
   @Column({ type: 'int', nullable: false })
+
   quantidadeDeTokensDeEntrada!: number;
   @ApiProperty()
-
   @Column({ type: 'int', nullable: false })
+
   quantidadeDeTokensDeSaida!: number;
   @ApiProperty()
-
   @Column({ type: 'int', nullable: false })
-  @ApiProperty()
 
   totaldeTokens!: number;
-
-  @Column({ type: 'decimal', precision: 9, scale: 2, nullable: false })
-    @ApiProperty()
-
-  tempoDeExecucaoEmMilissegundos!: number;
   
+  @ApiProperty()
+  @Column({ type: 'decimal', precision: 9, scale: 2, nullable: false })
+  tempoDeExecucaoEmMilissegundos!: number;
+
   @ApiProperty({ type: () => registroEntity })
   @ManyToOne(() => AgenteEntity, (x) => x['registroExecucao'], {
     onDelete: 'CASCADE',
