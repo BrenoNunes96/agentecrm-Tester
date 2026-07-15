@@ -28,7 +28,7 @@ export class registroService {
         messages: [
           {
             role: 'user',
-            content: x.mensagemDeEntrada,
+            content: x.agente.PromptPrincipal + x.mensagemDeEntrada,
           },
         ],
       });
