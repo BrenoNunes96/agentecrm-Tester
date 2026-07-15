@@ -36,9 +36,11 @@ export class registroEntity {
     @ApiProperty()
 
   tempoDeExecucaoEmMilissegundos!: number;
-
+  
+  @ApiProperty({ type: () => registroEntity })
   @ManyToOne(() => AgenteEntity, (x) => x['registroExecucao'], {
     onDelete: 'CASCADE',
   })
+  @ApiProperty()
   agente!: AgenteEntity;
 }
