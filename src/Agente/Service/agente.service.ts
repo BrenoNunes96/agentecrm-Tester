@@ -3,13 +3,19 @@ import { AgenteEntity } from '../Entities/agente.entity';
 import { Any, ILike, Index, Repository } from 'typeorm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { DeleteResult } from 'typeorm/browser';
+import { Console } from 'console';
 
 @Injectable()
 export class AgenteService {
+  private datas : Array<string>
   constructor(
     @InjectRepository(AgenteEntity)
     private readonly agente: Repository<AgenteEntity>,
-  ) {}
+     
+     
+  ) { this.datas = []}
+
+
 
   async Create(x: AgenteEntity): Promise<AgenteEntity> {
     const name = await this.findByName(x.NomeAgente);
@@ -21,11 +27,13 @@ export class AgenteService {
     }
     return await this.agente.save(x);
   }
-
   async Findall(): Promise<AgenteEntity[]> {
+
     return await this.agente.find({ relations: { registroExecucao: true } });
   }
 
+
+  
   async findByName(NomeAgente: string): Promise<AgenteEntity | null> {
     if (!NomeAgente) {
       throw new HttpException(

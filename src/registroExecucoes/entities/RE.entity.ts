@@ -14,13 +14,15 @@ export class registroEntity {
   mensagemDeEntrada!: string;
 
   @ApiProperty()
-  @Column({ length: 700, nullable: false })
+  @Column({ length: 755, nullable: false })
 
   mensagemDeSaida!: string;
+
   @ApiProperty()
   @Column({ type: 'int', nullable: false })
 
   quantidadeDeTokensDeEntrada!: number;
+
   @ApiProperty()
   @Column({ type: 'int', nullable: false })
 
@@ -40,4 +42,8 @@ export class registroEntity {
   })
   @ApiProperty()
   agente!: AgenteEntity;
+
+  @Column({length:255,nullable:false})
+  data!:string
 }
+                                                                                                                                                                                                                                                                                                                                                                                                                                      

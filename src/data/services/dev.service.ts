@@ -13,7 +13,7 @@ export class devServices implements TypeOrmOptionsFactory {
       password: 'root',
       username: 'root',
       database: 'iaagente',
-      synchronize: false,
+      synchronize:true,
       entities: [AgenteEntity, registroEntity, usuarioEntity, UsuarioLogin],
     };
   }

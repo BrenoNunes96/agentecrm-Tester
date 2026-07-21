@@ -21,6 +21,8 @@ export class AgenteEntity {
   @ApiProperty()
   NomeAgente!: string;
 
+
+
   @Column({ length: 255, nullable: false })
   @ApiProperty()
   Descricao!: string;
