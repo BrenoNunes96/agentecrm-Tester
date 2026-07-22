@@ -55,7 +55,7 @@ export class AgenteController {
   }
 
   @UseGuards(jwtGuard)
-  @Get()
+  @Get("/")
   @HttpCode(HttpStatus.OK)
   async findAll(): Promise<AgenteEntity[]> {
     return await this.agenteService.Findall();
