@@ -13,7 +13,7 @@ import { prodService } from './data/services/prod.service';
 
 import { devServices } from './data/services/dev.service';
 import { AuthModule } from './auth/authmodule.module';
-
+console.log()
 @Module({
   imports: [
     ConfigModule.forRoot({
