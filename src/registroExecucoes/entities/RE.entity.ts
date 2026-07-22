@@ -43,7 +43,7 @@ export class registroEntity {
   @ApiProperty()
   agente!: AgenteEntity;
 
-  @Column({length:255,nullable:false})
+  @Column({length:255,nullable:true})
   data!:string
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                       
