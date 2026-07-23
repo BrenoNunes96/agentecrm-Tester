@@ -24,7 +24,7 @@ export class AgenteService {
         'agente ja existente com mesmo nome',
         HttpStatus.BAD_REQUEST,
       );
-    }
+    } 
     return await this.agente.save(x);
   }
   async Findall(): Promise<AgenteEntity[]> {
