@@ -36,7 +36,7 @@
               messages: [
                 {
                   role: 'user',
-                  content: ` encurte a responda em no maximo 6 linhas   ${x.mensagemDeEntrada}`,
+                  content: ` encurte a responda em no maximo 6 linhas ${x.agente.PromptPrincipal}   ${x.mensagemDeEntrada}`,
                 },
               ],
             });

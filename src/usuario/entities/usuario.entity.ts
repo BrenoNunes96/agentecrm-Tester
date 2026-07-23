@@ -18,4 +18,8 @@ export class usuarioEntity {
   @ApiProperty({ type: () => AgenteEntity })
   @OneToMany(() => AgenteEntity, (x) => x.usuario)
   agente!: AgenteEntity[];
+  
+  @Column({length:255, nullable:false})
+  status!:string
+
 }
