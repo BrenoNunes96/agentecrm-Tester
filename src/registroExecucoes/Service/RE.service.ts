@@ -9,7 +9,6 @@
 
       export class registroService {
         private dataAtual :Array<string>
-
         constructor(
           @InjectRepository(registroEntity)
           private readonly registroEntity: Repository<registroEntity>,
@@ -20,6 +19,7 @@
         
 
         async consultar(x: registroEntity): Promise<any> {
+console.log()
 
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
           const { CohereClientV2 } = require('cohere-ai');
