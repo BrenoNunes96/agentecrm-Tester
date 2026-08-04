@@ -1,3 +1,4 @@
+import { ok } from 'assert';
 import {
   Body,
   Controller,
@@ -24,6 +25,23 @@ import { jwtGuard } from '../../auth/guards/jwtGuard.guard';
 @Controller('/agente')
 export class AgenteController {
   constructor(private agenteService: AgenteService) {}
+
+
+
+@Get("/agenteId/:id")
+@UseGuards()
+@HttpCode(HttpStatus.OK)
+async agenteByid(@Param("id",ParseIntPipe) id:number ):Promise<AgenteEntity | null>{
+return this.agenteService.findById(id)
+}
+
+
+
+
+
+
+
+
 
   @Delete('/:id')
   @UseGuards(jwtGuard)

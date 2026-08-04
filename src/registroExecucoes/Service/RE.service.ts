@@ -6,6 +6,7 @@
       import { AgenteService } from '../../Agente/Service/agente.service';
       import { Bcrypt } from '../../auth/bcrypt/bcrypt';
       import { DeleteResult } from 'typeorm/browser';
+import { CONSTRAINT } from 'sqlite3';
 
       export class registroService {
         private dataAtual :Array<string>
@@ -49,7 +50,7 @@
       async dataPegar ():Promise<any>{
       let dat = new Date()
       let dataAtual:string = dat.toLocaleDateString('pt-BR')
-      console.log(dataAtual)
+      console.log("DAAPEGAR"+dataAtual)
 
       return dataAtual
 
@@ -67,20 +68,40 @@
           const arrayData:Array<any> = []
           const agenteBanco = await this.agenteService.findById(x.agente.id); // procura no banco Agente , numero do agente que se quer relacionar
           const dataHoje = await this.dataPegar()
+          console.log('entrou noo create')
           const dataultimo = agenteBanco?.registroExecucao[0].data
+          console.log(dataHoje +"" +"data no create")
+          const usuario =x.agente.usuario?.status
+          if(usuario === 'premium'){
+         if(dataHoje )
+
+          if(dataultimo){
+          if(dataHoje.split(" ")[4] !==dataultimo.split(" ")[4]){
+          alert("tokens mensais renovados!")
+           agenteBanco.LimiteMaxMensal=10000
+          }
            if(dataHoje !== dataultimo){
             if (agenteBanco){
-              console.log("foi deletado")
+    alert("Tokens renovados do dia!")
               agenteBanco.LimiteMaxToken = 20000 // aumenta em 20 mil de tokens
-              for(let x of agenteBanco.registroExecucao){  // entra na tabela registro do agente em especifico que estamos querendo registrar atenriormente,
-                    await this.delete(x.id)          // deletar o registro atraves do id
-                  
-              
-            }   
           }
         
         }
-              if(agenteBanco){
+      
+      }else{
+        if(agenteBanco){
+        if(dataHoje.split(" ")[4] !==dataultimo?.split(" ")[4]){
+        agenteBanco.LimiteMaxMensal = 50000
+      }
+      if(dataHoje !== dataultimo){
+        agenteBanco.LimiteMaxToken = 10000
+
+      }
+
+
+
+      }}
+          }    if(agenteBanco){
               if(agenteBanco?.LimiteMaxToken <= 0 ){
           throw  new HttpException ("Espere 24 horas para desbloquear o chat",HttpStatus.BAD_REQUEST)
           }}
@@ -99,8 +120,9 @@
           x.quantidadeDeTokensDeSaida = ia.usage.billedUnits.outputTokens;
           x.totaldeTokens = x.quantidadeDeTokensDeSaida + x.quantidadeDeTokensDeEntrada; // soma total de tokens
 
-            x.data = dataHoje
+      x.data = dataHoje
       console.log(x.data)
+      console.log("passou da data ")
 
 
           if (ia.message.content.length > 1) {          // caso o content seja mais que 1 dentro do elemento entao 
@@ -149,7 +171,7 @@
           const final = performance.now();
           const perfomanceTime: number = Number((final - inicio).toFixed(2));
           x.tempoDeExecucaoEmMilissegundos = perfomanceTime;
-  
+       
             return this.registroEntity.save(x);
           }
           

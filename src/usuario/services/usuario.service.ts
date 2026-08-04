@@ -6,6 +6,7 @@ import { HttpCode, HttpException, HttpStatus } from '@nestjs/common';
 
 import { DeleteResult } from 'typeorm/browser';
 import { Bcrypt } from '../../auth/bcrypt/bcrypt';
+import { UsuarioLogin } from '../../auth/entities/usuarioLogin.entities';
 
 export class usuarioService {
   constructor(
@@ -13,6 +14,10 @@ export class usuarioService {
     @InjectRepository(usuarioEntity)
     private readonly usuario: Repository<usuarioEntity>,
   ) {}
+
+async UsuarioId (x:number):Promise<usuarioEntity | null>{
+return this.usuario.findOne({where:{id:x}})
+}
 
   async deletar(x: number): Promise<DeleteResult> {
     return this.usuario.delete(x);

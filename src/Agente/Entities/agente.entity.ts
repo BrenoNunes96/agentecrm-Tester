@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { isNotEmpty, IsNotEmpty } from 'class-validator';
 import {
   Column,
   Entity,
@@ -41,6 +41,7 @@ export class AgenteEntity {
   @ApiProperty()
   LimiteMaxMensal!: number;
 
+@IsNotEmpty()
   @Column()
   @ApiProperty()
   Status!: string;
@@ -52,6 +53,7 @@ export class AgenteEntity {
   @ManyToOne(() => usuarioEntity, (x) => x.agente, {
     onDelete: 'CASCADE',
   })
+
   @ApiProperty()
   usuario!: usuarioEntity;
 }

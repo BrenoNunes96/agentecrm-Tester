@@ -1,35 +1,58 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { AgenteEntity } from '../Entities/agente.entity';
 import { Any, ILike, Index, Repository } from 'typeorm';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable, forwardRef } from '@nestjs/common';
 import { DeleteResult } from 'typeorm/browser';
-import { Console } from 'console';
+import { Console, error } from 'console';
+import { usuarioService } from '../../usuario/services/usuario.service';
 
 @Injectable()
 export class AgenteService {
-  private datas : Array<string>
+
   constructor(
     @InjectRepository(AgenteEntity)
     private readonly agente: Repository<AgenteEntity>,
-     
-     
-  ) { this.datas = []}
+  private usuario: usuarioService,
+    
+    ) {}
 
 
 
   async Create(x: AgenteEntity): Promise<AgenteEntity> {
     const name = await this.findByName(x.NomeAgente);
+const usuarios = await this.usuario.UsuarioId(x.usuario.id)
+if(usuarios?.status !=="premium"){
+if(x.LimiteMaxMensal > 200000){
+alert("Limite maximo mensal de 200.000 tokens!")
+}
+else if(x.LimiteMaxToken > 20000){
+alert("Limite maximo de token por dia excedido!")
+}
+}
+else{
+  if(x.LimiteMaxMensal > 100000){
+alert("limite maximo mensal de 100.000")
+  }
+  else if(x.LimiteMaxToken >10000){
+    alert('limite excedido de tokens por dia !')
+  }
+
+}
+
     if (name) {
       throw new HttpException(
         'agente ja existente com mesmo nome',
         HttpStatus.BAD_REQUEST,
       );
     } 
+    if(!usuarios){
+throw new HttpException("usuario não existente",HttpStatus.BAD_GATEWAY)
+    }
     return await this.agente.save(x);
   }
   async Findall(): Promise<AgenteEntity[]> {
 
-    return await this.agente.find({ relations: { registroExecucao: true } });
+    return await this.agente.find({ relations: { registroExecucao: true,usuario:true } });
   }
 
 
@@ -49,11 +72,12 @@ export class AgenteService {
   }
 
   async findById(id: number): Promise<AgenteEntity | null> {
+
     return await this.agente.findOne({
       where: { id },
-      relations: { registroExecucao: true },
+      relations: { registroExecucao: true, usuario:true },
     });
-  }
+}
 
   async Updated(x: AgenteEntity): Promise<AgenteEntity> {
     await this.findById(x.id); // verifica se existe o agente pelo id
@@ -70,7 +94,12 @@ export class AgenteService {
   }
 
   async Delete(id: number): Promise<DeleteResult> {
-    return await this.agente.delete(id);
+let agentes = await this.findById(id)
+if(agentes?.id === 0 || agentes?.id === 1){
+  throw new HttpException("não pode deletar ",HttpStatus.BAD_REQUEST)
+}
+
+return await this.agente.delete(id);
   }
 
   async mediaTokens(): Promise<any> {
