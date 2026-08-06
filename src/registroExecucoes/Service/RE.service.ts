@@ -68,8 +68,9 @@ import { CONSTRAINT } from 'sqlite3';
           const arrayData:Array<any> = []
           const agenteBanco = await this.agenteService.findById(x.agente.id); // procura no banco Agente , numero do agente que se quer relacionar
           const dataHoje = await this.dataPegar()
+          console.log(typeof(x.agente.id))
           console.log('entrou noo create')
-          const dataultimo = agenteBanco?.registroExecucao[0].data
+          const dataultimo = agenteBanco?.registroExecucao[0]?.data
           console.log(dataHoje +"" +"data no create")
           const usuario =x.agente.usuario?.status
           if(usuario === 'premium'){
@@ -109,7 +110,9 @@ import { CONSTRAINT } from 'sqlite3';
           
 
   
-        
+        if(!agenteBanco){
+              throw new HttpException ("não existe essa ia ",HttpStatus.NOT_FOUND)
+             }
 
           const ia: any = await this.consultar(x);
 
@@ -143,7 +146,7 @@ import { CONSTRAINT } from 'sqlite3';
           console.log(x.totaldeTokens);
 
           console.log('entrou');
-
+      
           if (agenteBanco?.Status === 'true') {
             // caso  seja  agente.Status ativo e caso exista o agente que se quer relacionar
 

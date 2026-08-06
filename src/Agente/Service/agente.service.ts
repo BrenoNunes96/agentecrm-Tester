@@ -5,6 +5,9 @@ import { HttpException, HttpStatus, Inject, Injectable, forwardRef } from '@nest
 import { DeleteResult } from 'typeorm/browser';
 import { Console, error } from 'console';
 import { usuarioService } from '../../usuario/services/usuario.service';
+import { AuthService } from '../../auth/Service/authService.service';
+import { AuthController } from '../../auth/controllers/auth.controller';
+import { UsuarioLogin } from '../../auth/entities/usuarioLogin.entities';
 
 @Injectable()
 export class AgenteService {
@@ -13,14 +16,22 @@ export class AgenteService {
     @InjectRepository(AgenteEntity)
     private readonly agente: Repository<AgenteEntity>,
   private usuario: usuarioService,
-    
-    ) {}
+    private authLogin :AuthService
+  
+  ) {}
 
 
 
   async Create(x: AgenteEntity): Promise<AgenteEntity> {
     const name = await this.findByName(x.NomeAgente);
-const usuarios = await this.usuario.UsuarioId(x.usuario.id)
+
+const usuarios = await this.usuario.UsuarioId(x.usuario?.id) // deve se enviar id do usuario no body 
+console.log(usuarios)
+if(usuarios){
+x.usuario = usuarios
+}
+
+
 if(usuarios?.status !=="premium"){
 if(x.LimiteMaxMensal > 200000){
 alert("Limite maximo mensal de 200.000 tokens!")
@@ -29,7 +40,7 @@ else if(x.LimiteMaxToken > 20000){
 alert("Limite maximo de token por dia excedido!")
 }
 }
-else{
+if(usuarios?.status ==='free'){
   if(x.LimiteMaxMensal > 100000){
 alert("limite maximo mensal de 100.000")
   }

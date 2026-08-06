@@ -37,9 +37,15 @@ export class AuthService {
 
     return buscarusuario;
   }
+   
+  async dadosUsuario():Promise<any>{
+const user = this.login
+    return 
 
+  }
+  
   async login(x: UsuarioLogin): Promise<any> {
-    const buscarusuario = await this.usuarioService.findbyname(x.usuario);
+     const buscarusuario = await this.usuarioService.findbyname(x.usuario);
     const payload = { sub: buscarusuario?.usuario };
     return {
       id: buscarusuario?.id,
