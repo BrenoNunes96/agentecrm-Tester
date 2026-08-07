@@ -5,6 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 @Entity({ name: 'tb_registro_de_execuções' })
 export class registroEntity {
   @PrimaryGeneratedColumn()
+    @ApiProperty()
 
   id!: number;
 
@@ -42,7 +43,9 @@ export class registroEntity {
   })
   @ApiProperty()
   agente!: AgenteEntity;
-
+    @ApiProperty()
+    
+    @ApiProperty()
   @Column({length:255,nullable:false})
   data!:string
 }
