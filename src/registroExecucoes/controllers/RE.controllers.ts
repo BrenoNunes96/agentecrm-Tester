@@ -15,7 +15,7 @@ export class registroController {
   @UseGuards(jwtGuard)
   @Post('/registrar')
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() x: registroEntity): Promise< registroEntity | undefined> {
+  async create(@Body() x: any): Promise< registroEntity | undefined> {
     return await this.registroService.create(x);
   
   }
