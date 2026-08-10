@@ -27,17 +27,7 @@
 
     const document = SwaggerModule.createDocument(app, config);
 
-    SwaggerModule.setup('swagger', app, document,{
-swaggerOptions:{
-   requestInterceptor: (request: any) => {
-        request.headers['x-api-key'] = process.env.API_KEY;
-
-        return request
-}
-}
-
-
-    });
+    SwaggerModule.setup('swagger', app, document);
     app.enableCors({
       origin: true,
     });
