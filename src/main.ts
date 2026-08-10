@@ -27,14 +27,7 @@ async function bootstrap() {
     .setDescription('cadastro de ias')
     .setVersion('1.0')
     .addBearerAuth()
-    .addApiKey(
-      {
-        type: 'apiKey',
-        name: 'x-api-key',
-        in: 'header',
-      },
-      'api-key',
-    )
+
     .build();
 
   const document = SwaggerModule.createDocument(

@@ -63,7 +63,7 @@
         
           const inicio = performance.now();
           // chama data atual o dia 
-
+                   
           //RENOVAÇÃO DE TOKENS BASEADO NO DIA 
           const arrayData:Array<any> = []
           const agenteBanco = await this.agenteService.findById(x.agente.id); // procura no banco Agente , numero do agente que se quer relacionar
@@ -72,8 +72,14 @@
           console.log('entrou noo create')
           const dataultimo = agenteBanco?.registroExecucao[0]?.data
           console.log(dataHoje +"" +"data no create")
-          const usuario =x.agente.usuario?.status
-          if(usuario === 'premium'){
+          const usuario =x.agente.usuario
+             
+           if(usuario.agente['id'] !== agenteBanco?.id){
+            throw new HttpException("Error",HttpStatus.BAD_REQUEST)
+            
+           }
+
+          if(usuario['status'] === 'premium'){
          if(dataHoje )
 
           if(dataultimo){
