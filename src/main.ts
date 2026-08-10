@@ -5,7 +5,7 @@ import {
   DocumentBuilder,
   SwaggerModule,
 } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { Headers, ValidationPipe } from '@nestjs/common';
 import 'dotenv/config';
 
 async function bootstrap() {
@@ -27,7 +27,14 @@ async function bootstrap() {
     .setDescription('cadastro de ias')
     .setVersion('1.0')
     .addBearerAuth()
-
+    .addApiKey(
+      {
+        type: 'apiKey',
+        name: 'x-api-key',
+        in: 'header',
+      },
+      'api-key',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(
