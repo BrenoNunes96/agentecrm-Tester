@@ -74,11 +74,7 @@
           console.log(dataHoje +"" +"data no create")
           const usuario =x.agente.usuario
              
-           if(usuario.agente['id'] !== agenteBanco?.id){
-            throw new HttpException("Error",HttpStatus.BAD_REQUEST)
-            
-           }
-
+      
           if(usuario['status'] === 'premium'){
          if(dataHoje )
 
