@@ -24,7 +24,7 @@ import { AuthModule } from './auth/authmodule.module';
       imports: [devServices],
       
     }),
-    AgenteModule,
+    AgenteModule, 
     UsuarioModule,
     AuthModule,
     reModule,
