@@ -15,11 +15,29 @@
       .setDescription('cadastro de ias ')
       .setVersion('1.0')
       .addBearerAuth()
+    .addApiKey(
+      {
+        type: 'apiKey',
+        name: 'x-api-key',
+        in: 'header',
+      },
+      'api-key',
+    )
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
 
-    SwaggerModule.setup('swagger', app, document);
+    SwaggerModule.setup('swagger', app, document,{
+swaggerOptions:{
+   requestInterceptor: (request: any) => {
+        request.headers['x-api-key'] = process.env.API_KEY;
+
+        return request
+}
+}
+
+
+    });
     app.enableCors({
       origin: true,
     });

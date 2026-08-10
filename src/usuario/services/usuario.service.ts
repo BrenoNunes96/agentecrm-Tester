@@ -40,7 +40,6 @@ return this.usuario.findOne({where:{id:x}})
 
   async create(x: usuarioEntity): Promise<usuarioEntity> {
     const usuarioCadastro = await this.findbyname(x.usuario);
-
     if (usuarioCadastro) {
       throw new HttpException(
         'mesmo usuario escolha outro',

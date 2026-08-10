@@ -6,7 +6,7 @@
       import { AgenteService } from '../../Agente/Service/agente.service';
       import { Bcrypt } from '../../auth/bcrypt/bcrypt';
       import { DeleteResult } from 'typeorm/browser';
-import { CONSTRAINT } from 'sqlite3';
+
 
       export class registroService {
         private dataAtual :Array<string>
