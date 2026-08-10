@@ -75,7 +75,7 @@
           const usuario =x.agente.usuario
              
       
-          if(usuario['status'] === 'premium'){
+          if(usuario?.status === 'premium'){
          if(dataHoje )
 
           if(dataultimo){
